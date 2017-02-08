@@ -4,6 +4,7 @@ import gzip
 import os
 
 offX, offY = 0, 0
+loadLayer2 = False
 MOVEMENT_KEYS = {
                  #Standard arrows
                  'UP': [0, -1],
@@ -44,8 +45,11 @@ while not tdl.event.is_window_closed():
 	frame.clear()
 	root.clear()
 	root.draw_str(0, 0, "Width : {} / Height : {}".format(fileWidth, fileHeight), fg = (255, 0, 0), bg = Ellipsis)
-	for layer in layers:
-		xpL.load_layer_to_console(frame, layer, offX, offY)
+	if loadLayer2:
+		for layer in layers:
+			xpL.load_layer_to_console(frame, layer, offX, offY)
+	else:
+		xpL.load_layer_to_console(frame, layers[0], offX, offY)
 	root.blit(frame, 10, 10, SUB_WIDTH, SUB_HEIGHT, srcX=0, srcY=0)
 	tdl.flush()
 	key = tdl.event.key_wait()
@@ -56,6 +60,8 @@ while not tdl.event.is_window_closed():
 			offY += y
 	elif key.keychar.upper() == "ESCAPE":
 		raise SystemExit("User pressed Escape")
+	elif key.keychar.upper() == "A":
+		loadLayer2 = not loadLayer2
 ####################
 	
 	
